@@ -81,16 +81,25 @@
 			var cmd = 'login';
 			var param =
 			{
-				uiId : uiId,
-				uiPassword : uiPassword,
+				ui_id : uiId,
+				ui_pwd : uiPassword,
 				cmd : cmd
 			}
 			$.ajax({
 				method : 'POST',
 				url : '/ajax/user',
 				data : JSON.stringify(param),
-				contentType:'application/json'
-			})
+				contentType:'application/json',
+				success : function(res){
+					location 
+					if(res.result){
+						alert('로그인성공!');
+					}else{
+						alert('로그인실패!');
+					}
+				
+				}
+			});
 		}
 	</script>
 </body>

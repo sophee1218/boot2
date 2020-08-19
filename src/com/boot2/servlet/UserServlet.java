@@ -3,7 +3,7 @@ package com.boot2.servlet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.interfaces.RSAKey;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,40 +12,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.boot2.service.UserInfoService;
-import com.boot2.service.impl.UserInfoServiceImpl;
+import com.boot2.service.UserService;
+import com.boot2.service.impl.UserServiceImpl;
+import com.boot2.vo.UserInfoVO;
 import com.google.gson.Gson;
 
 @WebServlet("/ajax/user")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Gson gson = new Gson();
-	private UserInfoService userinfoservice = new UserInfoServiceImpl();
- 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private UserService userService = new UserServiceImpl();
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String contentType = response.getContentType();
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		BufferedReader br = request.getReader();
-		PrintWriter pw = response.getWriter();
 		String str;
 		StringBuffer sb = new StringBuffer();
-		while((str=br.readLine())!=null) {
+		while ((str = br.readLine()) != null) {
 			sb.append(str);
 		}
-		Map<String,Object> param = gson.fromJson(sb.toString(), Map.class);
-	
-		if("login".equals(param.get("url"))) {
-			Map<String,Object> rMap = userinfoservice.selectUserInfoByUiId(param);
-			String jsonStr = gson.toJson(rMap);
-			pw.print(jsonStr);
-			
-			System.out.println(rMap.get("result"));
-	
-		}	
-	
+		UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
+		Map<String, Object> result = new HashMap<>();
+		result.put("result", userService.doLogin(user, request.getSession()));
+		String json = gson.toJson(result);
+		PrintWriter pw = response.getWriter();
+		pw.println(json);
+
 	}
 
 }

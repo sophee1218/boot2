@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(value="/views/*", loadOnStartup=1)
+@WebServlet(urlPatterns ="/views/*", loadOnStartup=1)
 public class ViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String PREFIX="/WEB-INF";

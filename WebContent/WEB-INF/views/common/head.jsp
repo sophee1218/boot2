@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="/res/images/favicon.ico"/>
+	<link rel="icon" type="image/png" href="/res/images/heart.png"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/res/css/bootstrap.min.css">
 <!--===============================================================================================-->
