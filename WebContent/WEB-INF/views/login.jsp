@@ -62,7 +62,7 @@
 					</div>
 
 					<div class="flex-col-c p-t-155">
-						<span class="txt1 p-b-17"> Or Sign Up Using </span> <a href="#"
+						<span class="txt1 p-b-17"> Or Sign Up Using </span> <a href="/views/join"
 							class="txt2"> Sign Up </a>
 					</div>
 				</form>
@@ -94,6 +94,7 @@
 					location 
 					if(res.result){
 						alert('로그인성공!');
+						location.href='/';
 					}else{
 						alert('로그인실패!');
 					}

@@ -25,8 +25,27 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String contentType = response.getContentType();
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		if("checkid".equals(request.getParameter("cmd")))
+		{
+			UserInfoVO user = new UserInfoVO();
+			user.setUi_id(request.getParameter("ui_id"));
+			Map<String, Object> result = new HashMap<>();
+			result.put("result",userService.doCheckUserId(user));
+			String json = gson.toJson(result);
+			PrintWriter pw = response.getWriter();
+			pw.println(json);
+		}
+		if("checknickname".equals(request.getParameter("cmd")))
+		{
+			UserInfoVO user = new UserInfoVO();
+			user.setUi_nickname(request.getParameter("ui_nickname"));
+			Map<String, Object> result = new HashMap<>();
+			result.put("result",userService.doCheckUserNickname(user));
+			String json = gson.toJson(result);
+			PrintWriter pw = response.getWriter();
+			pw.println(json);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +58,18 @@ public class UserServlet extends HttpServlet {
 		}
 		UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
 		Map<String, Object> result = new HashMap<>();
+		
+		if("login".equals(user.getCmd())) {
 		result.put("result", userService.doLogin(user, request.getSession()));
+		}else if("signup".equals(user.getCmd())) {
+			result.put("result",userService.insertUser(user));
+		}else if("logout".equals(user.getCmd())) {
+			request.getSession().invalidate();
+			result.put("result", true);
+		}
+			
+			
+		
 		String json = gson.toJson(result);
 		PrintWriter pw = response.getWriter();
 		pw.println(json);

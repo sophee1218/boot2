@@ -13,11 +13,13 @@ import com.boot2.vo.UserInfoVO;
 public class UserServiceImpl implements UserService {
 
 	private UserDAO udao = new UserDAOImpl();
-	
+
 	@Override
 	public int insertUser(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (udao.checkUserId(user) != null) {
+			return -1;
+		}
+		return udao.insertUser(user);
 	}
 
 	@Override
@@ -38,7 +40,6 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	
 	public UserInfoVO selectUserForLogin(UserInfoVO user) {
 		// TODO Auto-generated method stub
 		return null;
@@ -53,13 +54,32 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean doLogin(UserInfoVO user, HttpSession hs) {
 		user = udao.selectUserForLogin(user);
-		if(user!=null) {
+		if (user != null) {
 			hs.setAttribute("user", user);
 			return true;
 		}
-		
+
 		return false;
 	}
+
+	@Override
+	public boolean doCheckUserId(UserInfoVO user) {
+		user = udao.checkUserId(user);
+		if (user != null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean doCheckUserNickname(UserInfoVO user) {
+		user = udao.checkUserNickname(user);
+		if (user != null) {
+			return false;
+		}
+		return true;
+	}
+
 	public static void main(String[] args) {
 		InitServlet is = new InitServlet();
 		is.init();
@@ -67,7 +87,7 @@ public class UserServiceImpl implements UserService {
 		UserInfoVO user = new UserInfoVO();
 		user.setUi_id("aaa27");
 		user.setUi_pwd("1133");
-		boolean isLogin = ud.doLogin(user,null);
+		boolean isLogin = ud.doLogin(user, null);
 		System.out.println(isLogin);
 	}
 }

@@ -15,22 +15,22 @@
 			style="background-image: url('/res/images/gg.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-49"> Sign Up </span>
+					<span class="login100-form-title p-b-49"> 회원정보수정 </span>
 
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="ID is reauired">
 						<span class="label-input100">ID</span>
 						 <input	class="input100" type="text" name="ui_id" id="ui_id"
-							placeholder="Type your ID"> <span class="focus-input100"
+							placeholder="Type your ID"value="${user.ui_id}"> <span class="focus-input100"
 							data-symbol="&#x270C;"></span>
 					</div>
 					<br>
-							<button type="button" onclick="checkId()">중복확인</button>
+							
 
 					<div class="wrap-input100 validate-input"
 						data-validate="Password is required">
 						<span class="label-input100">Password</span> <input
-							class="input100" type="password" name="ui_pwd" id="ui_pwd"
+							class="input100" type="password" value="${user.ui_pwd}" name="ui_pwd" id="ui_pwd"
 							placeholder="Type your password"> <span
 							class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
@@ -38,7 +38,7 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Name is reauired">
 						<span class="label-input100">Name</span> <input
-							class="input100" type="text" name="ui_name" id="ui_name"
+							class="input100" type="text" value="${user.ui_name}" name="ui_name" id="ui_name"
 							placeholder="Type your Name"> <span class="focus-input100"
 							data-symbol="&#x263A;"></span>
 					</div>
@@ -46,7 +46,7 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Age is reauired">
 						<span class="label-input100">Age</span> <input
-							class="input100" type="text" name="ui_age" id="ui_age"
+							class="input100" type="text" value="${user.ui_age}" name="ui_age" id="ui_age"
 							placeholder="Type your Age"> <span class="focus-input100"
 							data-symbol="&#x2764;"></span>
 					</div>
@@ -54,7 +54,7 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Birth is reauired">
 						<span class="label-input100">Birth</span> <input
-							class="input100" type="date" name="ui_birth" id="ui_birth"
+							class="input100" type="date" value="${user.ui_birth}"name="ui_birth" id="ui_birth"
 							placeholder="Type your Birth"> <span class="focus-input100"
 							data-symbol="&#x263C;"></span>
 					</div>
@@ -63,7 +63,7 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Phone is reauired">
 						<span class="label-input100">Phone</span> <input
-							class="input100" type="text" name="ui_phone" id="ui_phone"
+							class="input100" type="text"value="${user.ui_phone}" name="ui_phone" id="ui_phone"
 							placeholder="Type your Phone"> <span class="focus-input100"
 							data-symbol="&#x260E;"></span>
 					</div>
@@ -72,7 +72,7 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Email is reauired">
 						<span class="label-input100">Email</span> <input
-							class="input100" type="text" name="ui_email" id="ui_email"
+							class="input100" type="text" value="${user.ui_email}"name="ui_email" id="ui_email"
 							placeholder="Type your Email"> <span class="focus-input100"
 							data-symbol="&#x40;"></span>
 					</div>
@@ -80,12 +80,10 @@
 					<div class="wrap-input100 validate-input m-b-23"
 						data-validate="Nickname is reauired">
 						<span class="label-input100">Nickname</span> <input
-							class="input100" type="text" name="ui_nickname" id="ui_nickname"
+							class="input100" type="text" value="${user.ui_nickname}" name="ui_nickname" id="ui_nickname"
 							placeholder="Type your Nickname"> <span class="focus-input100"
 							data-symbol="&#x266B;"></span>
 					</div>
-					<br>
-							<button type="button" onclick="checkNickname()">중복확인</button>
 
 
 
@@ -93,7 +91,7 @@
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button type="button" class="login100-form-btn"
-								onclick="doSignUp()">Sign Up</button>
+								onclick="doSignUp()">회원정보수정</button>
 						</div>
 					</div>
 
@@ -153,25 +151,6 @@ function checkId(){
 			}
 		}
 	});
-}
-	function checkNickname(){
-		var ui_nickname = $('#ui_nickname').val();
-		var cmd = 'checknickname';
-		
-		$.ajax({
-			method : 'GET',
-			url : '/ajax/user?ui_nickname='+ui_nickname+'&cmd='+cmd,
-			contentType : 'application/json',
-			data : {},
-			success : function(res){
-				location 
-				if(res.result){
-					alert('가입 가능!');
-				}else{
-					alert('닉네임 중복!');
-				}
-			}
-		});
 
 	
 	

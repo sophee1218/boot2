@@ -12,4 +12,6 @@ public interface UserDAO {
 	UserInfoVO selectUser(UserInfoVO user);
 	UserInfoVO selectUserForLogin(UserInfoVO user);
 	List<UserInfoVO> selectUserList(UserInfoVO user);
+	UserInfoVO checkUserId (UserInfoVO user);
+	UserInfoVO checkUserNickname(UserInfoVO user);
 }
