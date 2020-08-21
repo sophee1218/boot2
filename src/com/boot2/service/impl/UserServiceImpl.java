@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.boot2.dao.UserDAO;
 import com.boot2.dao.impl.UserDAOImpl;
+import com.boot2.listener.SessionListener;
 import com.boot2.service.UserService;
 import com.boot2.servlet.InitServlet;
 import com.boot2.vo.UserInfoVO;
@@ -23,21 +24,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int deleteUser(UserInfoVO user) {
-		// TODO Auto-generated method stub
+	public int deleteUser(UserInfoVO user,HttpSession hs) {
+		int cnt = udao.deleteUser(user);
+		if(cnt==1) {
+			hs.invalidate();
+			return cnt;
+		}
+		
 		return 0;
 	}
 
 	@Override
-	public int updateUser(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateUser(UserInfoVO user,HttpSession hs) {
+		int cnt = udao.updateUser(user);
+		if(cnt==1) {
+			hs.setAttribute("user", udao.selectUser(user));
+		}
+		return cnt;
 	}
 
 	@Override
 	public UserInfoVO selectUser(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return null;
+		return udao.selectUser(user);
 	}
 
 	public UserInfoVO selectUserForLogin(UserInfoVO user) {
@@ -55,6 +63,7 @@ public class UserServiceImpl implements UserService {
 	public boolean doLogin(UserInfoVO user, HttpSession hs) {
 		user = udao.selectUserForLogin(user);
 		if (user != null) {
+			SessionListener.checkUserId(user.getUi_id());
 			hs.setAttribute("user", user);
 			return true;
 		}

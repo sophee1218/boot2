@@ -15,6 +15,7 @@
 			style="background-image: url('/res/images/gg.jpg');">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
 				<form class="login100-form validate-form">
+				<input class type="hidden" name="ui_num" id="ui_num" value="${user.ui_num}">
 					<span class="login100-form-title p-b-49"> 회원정보수정 </span>
 
 					<div class="wrap-input100 validate-input m-b-23"
@@ -111,7 +112,7 @@ function doSignUp(){
 	}
 	console.log(params);	
 	
-	params.cmd = 'signup';
+	params.cmd = 'modify';
 	$.ajax({
 		method : 'Post',
 		url : '/ajax/user',
@@ -120,13 +121,11 @@ function doSignUp(){
 		success : function(res){
 	
 			if(res.result===1){
-				alert('회원가입 완료!');
-				location.href='/views/login';
-			}else if(res.result===-1){
-				alert ('이미 있는 아이디입니다');
+				alert('회원수정 완료!');
+				location.href='/';
 			}
 			else{
-				alert('회원가입 실패!');
+				alert('문제있어요!');
 			}
 		}
 	});
