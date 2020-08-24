@@ -25,27 +25,23 @@ public class UserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		if("checkid".equals(request.getParameter("cmd")))
-		{
+			Map<String, Object> result = new HashMap<>();
 			UserInfoVO user = new UserInfoVO();
+			
+		if ("checkid".equals(request.getParameter("cmd"))) {
 			user.setUi_id(request.getParameter("ui_id"));
-			Map<String, Object> result = new HashMap<>();
-			result.put("result",userService.doCheckUserId(user));
-			String json = gson.toJson(result);
-			PrintWriter pw = response.getWriter();
-			pw.println(json);
-		}
-		if("checknickname".equals(request.getParameter("cmd")))
-		{
-			UserInfoVO user = new UserInfoVO();
+			result.put("result", userService.doCheckUserId(user));
+		} else if ("checknickname".equals(request.getParameter("cmd"))) {
 			user.setUi_nickname(request.getParameter("ui_nickname"));
-			Map<String, Object> result = new HashMap<>();
-			result.put("result",userService.doCheckUserNickname(user));
-			String json = gson.toJson(result);
-			PrintWriter pw = response.getWriter();
-			pw.println(json);
+			result.put("result", userService.doCheckUserNickname(user));
+		} else if("list".equals(request.getParameter("cmd"))) {
+			result.put("list",userService.selectUserList(null));
 		}
+		
+		String json = gson.toJson(result);
+		PrintWriter pw = response.getWriter();
+		pw.println(json);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,22 +54,20 @@ public class UserServlet extends HttpServlet {
 		}
 		UserInfoVO user = gson.fromJson(sb.toString(), UserInfoVO.class);
 		Map<String, Object> result = new HashMap<>();
-		
-		if("login".equals(user.getCmd())) {
-		result.put("result", userService.doLogin(user, request.getSession()));
-		}else if("signup".equals(user.getCmd())) {
-			result.put("result",userService.insertUser(user));
-		}else if("logout".equals(user.getCmd())) {
+
+		if ("login".equals(user.getCmd())) {
+			result.put("result", userService.doLogin(user, request.getSession()));
+		} else if ("signup".equals(user.getCmd())) {
+			result.put("result", userService.insertUser(user));
+		} else if ("logout".equals(user.getCmd())) {
 			request.getSession().invalidate();
 			result.put("result", true);
-		}else if("modify".equals(user.getCmd())) {
-			result.put("result",userService.updateUser(user,request.getSession()));
-		}else if("delete".equals(user.getCmd())) {
-			result.put("result",userService.deleteUser(user,request.getSession()));
+		} else if ("modify".equals(user.getCmd())) {
+			result.put("result", userService.updateUser(user, request.getSession()));
+		} else if ("delete".equals(user.getCmd())) {
+			result.put("result", userService.deleteUser(user, request.getSession()));
 		}
-			
-			
-		
+
 		String json = gson.toJson(result);
 		PrintWriter pw = response.getWriter();
 		pw.println(json);

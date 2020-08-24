@@ -1,5 +1,6 @@
 package com.boot2.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -55,8 +56,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserInfoVO> selectUserList(UserInfoVO user) {
-		// TODO Auto-generated method stub
-		return null;
+
+		
+		return udao.selectUserList(user);
 	}
 
 	@Override
@@ -92,11 +94,11 @@ public class UserServiceImpl implements UserService {
 	public static void main(String[] args) {
 		InitServlet is = new InitServlet();
 		is.init();
-		UserService ud = new UserServiceImpl();
-		UserInfoVO user = new UserInfoVO();
-		user.setUi_id("aaa27");
-		user.setUi_pwd("1133");
-		boolean isLogin = ud.doLogin(user, null);
-		System.out.println(isLogin);
+		
+		UserService userService = new UserServiceImpl();
+		List<UserInfoVO> userList = new ArrayList<UserInfoVO>();
+		
+		userList = userService.selectUserList(null);
+		System.out.println(userList);
 	}
 }
