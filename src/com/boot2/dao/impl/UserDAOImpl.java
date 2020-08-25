@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.boot2.dao.UserDAO;
 import com.boot2.servlet.InitServlet;
 import com.boot2.vo.UserInfoVO;
@@ -270,6 +272,15 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return null;
 	}
+	
+	
+
+	
+	
+	
+	
+	
+	
 	
 	
 	public static void main(String[] args) {

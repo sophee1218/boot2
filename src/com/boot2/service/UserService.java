@@ -16,5 +16,7 @@ public interface UserService
 	List<UserInfoVO> selectUserList(UserInfoVO user);
 	boolean doCheckUserId(UserInfoVO user);
 	boolean doCheckUserNickname(UserInfoVO user);
+	
+	int deleteUsers(int[] uiNums);
 }
 	

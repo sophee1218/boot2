@@ -2,6 +2,8 @@ package com.boot2.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.boot2.vo.UserInfoVO;
 
 public interface UserDAO {
@@ -14,4 +16,6 @@ public interface UserDAO {
 	List<UserInfoVO> selectUserList(UserInfoVO user);
 	UserInfoVO checkUserId (UserInfoVO user);
 	UserInfoVO checkUserNickname(UserInfoVO user);
+	
+	
 }
