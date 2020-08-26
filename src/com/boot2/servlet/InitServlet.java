@@ -109,20 +109,13 @@ public class InitServlet extends HttpServlet
 		
 	}
 
-	public static void close(ResultSet rs, PreparedStatement ps, Connection conn)
-	{
-		try
-		{
+	public static void close(ResultSet rs, PreparedStatement ps, Connection conn) {
+		try {
 			rs.close();
-			ps.close();
-			conn.close();
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
+			close(ps,conn);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-
 	}
 
 	public static void main(String[] args)
