@@ -1,12 +1,9 @@
-package com.boot2.dao;
+package com.boot2.service;
 
 import java.util.List;
 import java.util.Map;
 
-public interface MemberInfoDAO
+public interface MemberService
 {
-	  List<Map<String,Object>> selectTest(Map<String,Object> member);
 	  List<Map<String, Object>> selectMemberInfoList(Map<String, Object> member);
-
-
 }

@@ -1,15 +1,20 @@
 package com.boot2.servlet;
 
-import java.sql.CallableStatement;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.tomcat.dbcp.dbcp2.ConnectionFactory;
 import org.apache.tomcat.dbcp.dbcp2.DriverManagerConnectionFactory;
 import org.apache.tomcat.dbcp.dbcp2.PoolableConnection;
@@ -120,32 +125,17 @@ public class InitServlet extends HttpServlet
 
 	public static void main(String[] args)
 	{
-		InitServlet is = new InitServlet();
-		is.init();
-		Connection con = InitServlet.getConnection();
-		String sql = "{call prd_incress_sal(?,?)}";
-		try
-		{
-			CallableStatement cs = con.prepareCall(sql);
-			cs.setInt(1, 1);
-			cs.setDouble(2, 1.2);
-			int result = cs.executeUpdate();
-			System.out.println("결과 : " + result);
-		} catch (SQLException e)
-		{
-			e.printStackTrace();
-		} finally
-		{
-			try
-			{
-				con.close();
 
-			} catch (SQLException e)
-			{
-				e.printStackTrace();
-			}
+
+		InputStream is = InitServlet.class.getClassLoader().getResourceAsStream("resources/mybatis-config.xml");
+		SqlSessionFactoryBuilder ssfb = new SqlSessionFactoryBuilder();
+		SqlSessionFactory ssf = ssfb.build(is);
+		
+		try(SqlSession ss = ssf.openSession()){
+		List<Map<String,Object>> memberList = ss.selectList("Member.selectMember");
+		System.out.println(memberList);
 		}
-
 	}
+		
 
 }
